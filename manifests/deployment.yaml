@@ -4,7 +4,7 @@ metadata:
   labels:
     app: ph2ifttt
   name: ph2ifttt
-  namespace: ph2ifttt_dev
+  namespace: ph2ifttt-dev
 spec:
   progressDeadlineSeconds: 600
   replicas: 2
