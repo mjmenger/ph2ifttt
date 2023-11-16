@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ph2ifttt
+  name: ph2ifttt
+  namespace: ph2ifttt
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ph2ifttt
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: ph2ifttt
+    spec:
+      containers:
+      - env:
+        - name: TARGET_SERVICE
+          valueFrom:
+            secretKeyRef:
+              key: targetservice
+              name: ph2ifttt
+        - name: IFTTT_EVENT
+          valueFrom:
+            secretKeyRef:
+              key: eventname
+              name: ph2ifttt
+        - name: IFTTT_WEBHOOK_KEY
+          valueFrom:
+            secretKeyRef:
+              key: webhookkey
+              name: ph2ifttt
+        image: mmenger/ph2ifttt:0.3.1
+        imagePullPolicy: IfNotPresent
+        name: ph2ifttt
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+
