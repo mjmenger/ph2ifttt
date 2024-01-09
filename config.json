@@ -1,0 +1,5 @@
+{
+    "/"             : "buildcomplete",
+    "/buildcomplete": "buildcomplete",
+    "/anotherevent" : "anotherevent"
+}
